@@ -1,6 +1,11 @@
 {
-    "name": "ludeeus/integration_blueprint",
+    "name": "GraceGRD/itho_remote",
     "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye",
+    // https: //stackoverflow.com/questions/68527888/how-can-i-use-a-usb-com-port-inside-of-a-vscode-development-container
+    "runArgs": [
+        "--device=dev/ttyACM0:/dev/ttyACM0"
+    ],
+    "privileged": true,
     "postCreateCommand": "scripts/setup",
     "forwardPorts": [
         8123

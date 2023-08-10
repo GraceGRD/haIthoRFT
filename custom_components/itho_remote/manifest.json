@@ -1,0 +1,14 @@
+{
+  "domain": "itho_remote",
+  "name": "Itho Remote",
+  "codeowners": [
+    "@GraceGRD"
+  ],
+  "documentation": "https://github.com/GraceGRD/itho_remote",
+  "iot_class": "local_polling",
+  "requirements": [
+    "pyserial-asyncio==0.6"
+  ],
+  "config_flow": true,
+  "version": "0.0.0"
+}
