@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import asyncio
 
-from typing import Any
+# import logging
+
+from typing import Any, Dict
 
 import voluptuous as vol
 from homeassistant import config_entries
@@ -12,9 +14,10 @@ from homeassistant.data_entry_flow import FlowResult
 
 import homeassistant.helpers.config_validation as cv
 
-from .itho_remote import IthoRemoteRFT, IthoRemoteGatewayError
+from IthoRFT.remote import IthoRFTRemote, IthoRemoteGatewayError
 
-from .const import DOMAIN, CONF_REMOTE_ADDRESS, CONF_UNIT_ADDRESS
+
+from .const import DOMAIN, LOGGER, CONF_REMOTE_ADDRESS, CONF_UNIT_ADDRESS
 
 
 class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -34,14 +37,18 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Handle connect evofw3 gateway."""
+        errors: Dict[str, str] = {}
         if user_input is not None:
-            # TODO: Attempt a connect
-            print("async_step_connect result")
-            print(user_input)
-
-            # Input is valid, set data.
-            self.data = user_input
-            self.data[CONF_PORT] = user_input.get(CONF_PORT)
+            self.remote = IthoRFTRemote(port=user_input.get(CONF_PORT))
+            try:
+                self.remote.self_test()
+            except IthoRemoteGatewayError as exception:
+                LOGGER.error(exception)
+                errors["base"] = "connection"
+            else:
+                # Input is valid, set data.
+                self.data = user_input
+                self.data[CONF_PORT] = user_input.get(CONF_PORT)
 
             # Success, return the form of the next step
             return await self.async_step_pair_menu()
@@ -60,9 +67,7 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle pair menu choice."""
         if user_input is not None:
-            # TODO: Decide, or remove async_step_pair_menu and show menu in async_step_connect
-            print("async_step_pair_menu result")
-            print(user_input)
+            LOGGER.warning("async_step_pair_menu: %s", user_input)
 
         return self.async_show_menu(
             step_id="pair_menu",
@@ -74,11 +79,22 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle automatic pairing."""
         if user_input is not None:
-            # TODO: Perform pairing
-            print("async_step_auto_pair :)")
-            print(user_input)
+            self.remote.start_task()
+            self.remote.pair()
 
-            await asyncio.sleep(5)
+            # TODO how to wait for completion?
+            while self.remote.is_pairing:
+                await asyncio.sleep(1)
+
+            LOGGER.debug(
+                "pairing done: %s %s",
+                self.remote.remote_address,
+                self.remote.unit_address,
+            )
+
+            # TODO what about pairing failed/timeout?
+            self.data[CONF_REMOTE_ADDRESS] = self.remote.remote_address
+            self.data[CONF_UNIT_ADDRESS] = self.remote.unit_address
 
             return await self.async_step_finish()
 
@@ -91,9 +107,11 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle manual pairing."""
         if user_input is not None:
-            # TODO: Validate addresses (inside pyIthoRFT)?
-            print("async_step_manual_pair :)")
-            print(user_input)
+            LOGGER.debug(
+                "pairing configured: %s %s",
+                user_input.get(CONF_REMOTE_ADDRESS),
+                user_input.get(CONF_UNIT_ADDRESS),
+            )
 
             self.data[CONF_REMOTE_ADDRESS] = user_input.get(CONF_REMOTE_ADDRESS)
             self.data[CONF_UNIT_ADDRESS] = user_input.get(CONF_UNIT_ADDRESS)
@@ -114,11 +132,11 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Handle finish."""
-        print("async_step_finish")
-        print(user_input)
-        print(self.data)
 
         if user_input is not None:
+            LOGGER.debug("Finish: %s", self.data)
+            self.remote.stop_task()
+            # TODO: Validate addresses (inside pyIthoRFT)?
             return self.async_create_entry(
                 title=f"Itho Remote on {self.data[CONF_PORT]}",
                 data=self.data,
@@ -133,8 +151,3 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 "unit_address": self.data[CONF_UNIT_ADDRESS],
             },
         )
-
-    # async def _test_gateway_communication(self, port) -> None:
-    #     """Validate gateway communication."""
-    #     itho_remote = IthoRemoteRFT(port=port)
-    #     itho_remote.self_test(itho_remote.evofw3_min_version)
