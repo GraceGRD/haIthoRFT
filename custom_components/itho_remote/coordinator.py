@@ -31,7 +31,7 @@ class IthoCoordinator(DataUpdateCoordinator):
         self.remote.start_task()
 
     def data_updated(self, data):
-        """Callback Itho data."""
+        """Update Itho data."""
         self.async_set_updated_data(data)
 
     async def _async_update_data(self):

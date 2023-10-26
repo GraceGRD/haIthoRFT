@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Dict
+from typing import Any
 
 import voluptuous as vol
 from homeassistant import config_entries
@@ -34,7 +34,7 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Handle connect evofw3 gateway."""
-        errors: Dict[str, str] = {}
+        errors: dict[str, str] = {}
         if user_input is not None:
             self.remote = IthoRFTRemote(port=user_input.get(CONF_PORT))
             try:
