@@ -59,6 +59,7 @@ class IthoStateSensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType:
+        """Get the native value of the sensor."""
         flags = self.coordinator.remote.data.get("flags")
         if flags is not None:
             active_speed_mode = flags.get("active_speed_mode")
@@ -82,6 +83,7 @@ class IthoCo2SensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType:
+        """Get the native value of the sensor."""
         return self.coordinator.remote.data.get("co2_level") # TODO: What if None?
 
 class IthoBypassValveSensorEntity(IthoEntity, SensorEntity):
@@ -98,6 +100,7 @@ class IthoBypassValveSensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType:
+        """Get the native value of the sensor."""
         return self.coordinator.remote.data.get("bypass_position") # TODO: What if None?
 
 class IthoTimeRemainingSensorEntity(IthoEntity, SensorEntity):
@@ -115,6 +118,7 @@ class IthoTimeRemainingSensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType | Decimal:
+        """Get the native value of the sensor."""
         return self.coordinator.remote.data.get("remaining_time") # TODO: What if None?
 
 class IthoTemperatureSensorEntity(IthoEntity, SensorEntity):
@@ -132,6 +136,7 @@ class IthoTemperatureSensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType | Decimal:
+        """Get the native value of the sensor."""
         return self.coordinator.remote.data.get(self._attr_unique_id) # TODO: What if None?
 
 class IthoFlowSensorEntity(IthoEntity, SensorEntity):
@@ -149,4 +154,5 @@ class IthoFlowSensorEntity(IthoEntity, SensorEntity):
 
     @property
     def native_value(self) -> StateType | Decimal:
+        """Get the native value of the sensor."""
         return self.coordinator.remote.data.get(self._attr_unique_id) # TODO: What if None?

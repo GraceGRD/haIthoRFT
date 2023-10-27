@@ -49,6 +49,7 @@ class RemoteCommandButton(IthoEntity, ButtonEntity):
         self._attr_name = self.command.capitalize()
 
     def press(self) -> None:
+        """Press the button to send the associated command."""
         return self.coordinator.remote.command(self.command)
 
 
@@ -67,6 +68,7 @@ class RemotePairButton(IthoEntity, ButtonEntity):
         self._attr_name = "Pair"
 
     def press(self) -> None:
+        """Press the button to initiate the pairing process."""
         return self.coordinator.remote.pair()
 
 
@@ -85,4 +87,5 @@ class RemoteRequestDataButton(IthoEntity, ButtonEntity):
         self._attr_name = "Request Data"
 
     def press(self) -> None:
+        """Press the button to request data."""
         return self.coordinator.remote.request_data()
