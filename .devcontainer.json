@@ -1,6 +1,6 @@
 {
     "name": "GraceGRD/itho_rft",
-    "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.10-bullseye",
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:0-3.11-bullseye",
     // https: //stackoverflow.com/questions/68527888/how-can-i-use-a-usb-com-port-inside-of-a-vscode-development-container
     "runArgs": [
         "--device=dev/ttyACM0:/dev/ttyACM0"
