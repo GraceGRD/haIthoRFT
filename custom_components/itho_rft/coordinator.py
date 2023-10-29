@@ -25,7 +25,7 @@ class IthoCoordinator(DataUpdateCoordinator):
             port=entry.data[CONF_PORT],
             remote_address=entry.data[CONF_REMOTE_ADDRESS],
             unit_address=entry.data[CONF_UNIT_ADDRESS],
-            log_to_file=True # TODO: Through config option?
+            log_to_file=False,  # TODO: Through config option?
         )
         self.remote.register_data_callback(self.data_updated)
         self.remote.start_task()
@@ -38,4 +38,4 @@ class IthoCoordinator(DataUpdateCoordinator):
         """Fetch data from Itho."""
         self.remote.request_data()
 
-        await asyncio.sleep(1) # TODO: Wait for completion?
+        await asyncio.sleep(1)  # TODO: Wait for completion?
