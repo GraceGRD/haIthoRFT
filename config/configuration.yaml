@@ -6,5 +6,5 @@ logger:
   default: info
   logs:
     IthoRFT.remote: debug
-    custom_components.itho_remote: debug
+    custom_components.itho_rft: debug
 

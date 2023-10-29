@@ -3,7 +3,7 @@
 from logging import Logger, getLogger
 
 # Integration domain
-DOMAIN = "itho_remote"
+DOMAIN = "itho_rft"
 
 LOGGER: Logger = getLogger(__package__)
 # SCAN_INTERVAL = timedelta(seconds=30)

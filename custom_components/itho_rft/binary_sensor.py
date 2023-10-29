@@ -52,7 +52,7 @@ class FlagsFaultActiveBinarySensor(IthoEntity, BinarySensorEntity):
             if fault_active is not None:
                 return bool(fault_active == "true")
 
-        return False # TODO: What if None?
+        return False  # TODO: What if None?
 
 
 class FlagsFilterDirtyBinarySensor(IthoEntity, BinarySensorEntity):
@@ -76,4 +76,4 @@ class FlagsFilterDirtyBinarySensor(IthoEntity, BinarySensorEntity):
             if filter_dirty is not None:
                 return bool(filter_dirty == "true")
 
-        return False # TODO: What if None?
+        return False  # TODO: What if None?
