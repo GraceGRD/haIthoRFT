@@ -38,8 +38,14 @@ _TODO: add pictures/description_
 * Restart Home Assistant (the HA Core)
 
 ## Configuration is done in the UI
-
-_TODO: add pictures/description_
+1. Configure the gateway port e.g. _/dev/ttyACM0_ and press SUBMIT. Under the hood the communication with the gateway is checked. <br/><br/><img src="image/menu_gateway.PNG" alt="drawing" width="300"/><br/><br/>
+2. Choose pairing method: <br/> - Automatic pairing randomly generates the remote address which is then used for pairing. <br/> - Manually pairing requires a remote and a unit address. This can be used to re-configure a paired remote, or copy a physical remote. <br/><br/><img src="image/menu_pairing_method.PNG" alt="drawing" width="300"/><br/><br/>
+3. Provide the Remote and Unit address in manual pairing mode and press SUBMIT. <br/><br/>
+<img src="image/menu_pair_manually.PNG" alt="drawing" width="300"/><br/><br/>
+4. Put the unit in pairing mode as described in the manual then press SUBMIT to start the pairing process. <br/><br/>
+<img src="image/menu_pair_automatically.PNG" alt="drawing" width="300"/><br/><br/>
+5. When pairing succeeded (manual or automatic pairing) the following message should pop up showing the port, remote and unit address. <br/><br/>
+<img src="image/menu_pair_success.PNG" alt="drawing" width="300"/><br/><br/>
 
 ## Contributions are welcome!
 
