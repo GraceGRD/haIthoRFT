@@ -10,6 +10,12 @@
 
 [![Community Forum][forum-shield]][forum]
 
+**_!!! This integration is in an early stage of development so use at your own risk and contributions are welcome. !!!_**
+
+**_!!! This integration implements the Itho RFT AUTO (536-0150) remote. Support for other remotes can be added if requested. !!!_**
+
+**_!!! This integration is tested with an Itho HRU ECO300 unit paired to a Itho RFT CO2 sensor. The implemented remote is the Itho RFT AUTO (536-0150). !!!_**
+
 _Home Assistant custom-integration that integrate with the [pyIthoRFT][pyIthoRFT] library._
 
 ## Hardware
