@@ -1,4 +1,5 @@
 {
+    "title": "Itho RFT",
     "config": {
         "step": {
             "connect": {
@@ -25,6 +26,16 @@
             },
             "finish": {
                 "description": "Pairing success!\n\n Port:   {port}\n Remote: {remote_address}\n Unit:   {unit_address}"
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "description": "Itho RFT: Configuration",
+                "data": {
+                    "enable_rf_log": "Enable gateway RF data logger"
+                }
             }
         }
     }

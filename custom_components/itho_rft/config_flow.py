@@ -5,8 +5,9 @@ import asyncio
 from typing import Any
 
 import voluptuous as vol
-from homeassistant import config_entries
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.const import CONF_PORT
+from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 
 import homeassistant.helpers.config_validation as cv
@@ -14,16 +15,30 @@ import homeassistant.helpers.config_validation as cv
 from IthoRFT.remote import IthoRFTRemote, IthoRemoteGatewayError
 
 
-from .const import DOMAIN, LOGGER, CONF_REMOTE_ADDRESS, CONF_UNIT_ADDRESS
+from .const import (
+    DOMAIN,
+    LOGGER,
+    CONF_REMOTE_ADDRESS,
+    CONF_UNIT_ADDRESS,
+    CONF_ENABLE_RF_LOG,
+)
 
 
-class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class IthoRemoteConfigFlow(ConfigFlow, domain=DOMAIN):
     """Itho Remote config flow."""
 
     # The schema version of the entries that it creates
     # Home Assistant will call your migrate method if the version changes
     VERSION = 1
     data = None
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(
+        config_entry: ConfigEntry,
+    ) -> IthoRemoteOptionsFlowHandler:
+        """Get the options flow for this handler."""
+        return IthoRemoteOptionsFlowHandler(config_entry)
 
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
@@ -147,4 +162,34 @@ class IthoRemoteConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 "remote_address": self.data[CONF_REMOTE_ADDRESS],
                 "unit_address": self.data[CONF_UNIT_ADDRESS],
             },
+        )
+
+
+class IthoRemoteOptionsFlowHandler(OptionsFlow):
+    """Handle Itho Remote options."""
+
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        """Initialize Itho Remote options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Manage Itho Remote options."""
+
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Optional(
+                        CONF_ENABLE_RF_LOG,
+                        default=self.config_entry.options.get(
+                            CONF_ENABLE_RF_LOG, False
+                        ),
+                    ): bool,
+                }
+            ),
         )

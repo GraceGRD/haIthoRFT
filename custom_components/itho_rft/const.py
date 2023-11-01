@@ -18,5 +18,6 @@ VERSION = "0.0.0"
 
 CONF_REMOTE_ADDRESS = "remote_address"
 CONF_UNIT_ADDRESS = "unit_address"
+CONF_ENABLE_RF_LOG = "enable_rf_log"
 
 # TODO: Add icon for custom_integration: https://github.com/home-assistant/brands

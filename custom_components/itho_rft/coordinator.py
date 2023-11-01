@@ -10,7 +10,14 @@ from homeassistant.const import CONF_PORT
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import DOMAIN, LOGGER, SCAN_INTERVAL, CONF_REMOTE_ADDRESS, CONF_UNIT_ADDRESS
+from .const import (
+    DOMAIN,
+    LOGGER,
+    SCAN_INTERVAL,
+    CONF_REMOTE_ADDRESS,
+    CONF_UNIT_ADDRESS,
+    CONF_ENABLE_RF_LOG,
+)
 
 
 class IthoCoordinator(DataUpdateCoordinator):
@@ -25,7 +32,7 @@ class IthoCoordinator(DataUpdateCoordinator):
             port=entry.data[CONF_PORT],
             remote_address=entry.data[CONF_REMOTE_ADDRESS],
             unit_address=entry.data[CONF_UNIT_ADDRESS],
-            log_to_file=False,  # TODO: Through config option?
+            log_to_file=entry.options.get(CONF_ENABLE_RF_LOG, False),
         )
         self.remote.register_data_callback(self.data_updated)
         self.remote.start_task()
