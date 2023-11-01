@@ -37,9 +37,6 @@ async def async_setup_entry(
 class RemoteCommandButton(IthoEntity, ButtonEntity):
     """Defines a Itho remote button."""
 
-    # _attr_device_class = ButtonDeviceClass. # TODO: what class?
-    # _attr_entity_category = EntityCategory. # TODO: what category?
-
     def __init__(self, coordinator: IthoCoordinator, command) -> None:
         """Initialize the button entity."""
         super().__init__(coordinator=coordinator)
@@ -58,9 +55,6 @@ class RemoteCommandButton(IthoEntity, ButtonEntity):
 class RemotePairButton(IthoEntity, ButtonEntity):
     """Defines a Itho remote button."""
 
-    # _attr_device_class = ButtonDeviceClass. # TODO: what class?
-    # _attr_entity_category = EntityCategory. # TODO: what category?
-
     def __init__(self, coordinator: IthoCoordinator) -> None:
         """Initialize the button entity."""
         super().__init__(coordinator=coordinator)
@@ -76,9 +70,6 @@ class RemotePairButton(IthoEntity, ButtonEntity):
 
 class RemoteRequestDataButton(IthoEntity, ButtonEntity):
     """Defines a Itho request data button."""
-
-    _attr_device_class = ButtonDeviceClass.UPDATE  # TODO: what class?
-    # _attr_entity_category = EntityCategory. # TODO: what category?
 
     def __init__(self, coordinator: IthoCoordinator) -> None:
         """Initialize the button entity."""
