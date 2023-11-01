@@ -20,6 +20,7 @@ async def async_setup_entry(
     # TODO: Change command: any to enum and get available buttons from IthoRFT class?
     buttons = [
         RemotePairButton(coordinator),
+        RemoteCommandButton(coordinator, "night"),
         RemoteCommandButton(coordinator, "auto"),
         RemoteCommandButton(coordinator, "low"),
         RemoteCommandButton(coordinator, "high"),
