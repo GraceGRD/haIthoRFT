@@ -48,6 +48,7 @@ class RemoteCommandButton(IthoEntity, ButtonEntity):
 
         self._attr_unique_id = f"_{self.command}"
         self._attr_name = self.command.capitalize()
+        self._attr_icon = "mdi:remote"
 
     def press(self) -> None:
         """Press the button to send the associated command."""
