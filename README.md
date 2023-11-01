@@ -26,7 +26,22 @@ I've created my own €16,- gateway including shipping using the following compo
 * [EBYTE E07-900M10S][radio]
 * [868Mhz 3dBi][antenna]
 
-_TODO: add pictures/description_
+To build the software for this DIY gateway, follow the README instuctions from the [evofw3][evofw3] repository except for selecting the pinout configuration. Use:  **_Tools -> pinout -> SHA atmega32u4_**.
+
+Below the connections table and this is what my clumsy DIY gateway looks like :).
+
+<br/><img src="image/diy_gateway.PNG" alt="drawing" width="500"/><br/>
+
+| Arduino Pro Micro 3.3V 8MHz | EBYTE E07-900M10S | Signal | Color |
+|---|---|---|---|
+|VCC|VCC|3V3|Red|
+|GND|GND|GND|Brown|
+|R4 (PB0)|CSN|SPI slave select|Yellow|
+|D15 (PB1)|SCK|SPI serial clock|Green|
+|D16 (PB2)|MOSI|SPI master output slave input|Orange|
+|D14 (PB3)|MISO|SPI master input slave output|Purple|
+|TX0 (PD2)|GD00|CC1101 TX data|White|
+|RX1 (PD3)|GD02|CC1101 RX data|Brown|
 
 ## Installation
 
