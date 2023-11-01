@@ -34,9 +34,8 @@ async def async_setup_entry(
 class FlagsFaultActiveBinarySensor(IthoEntity, BinarySensorEntity):
     """Defines a Itho flags fault active binary sensor."""
 
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_device_class = BinarySensorDeviceClass.PROBLEM
-    _attr_name = "Fault"
+    _attr_name = "Internal fault"
 
     def __init__(self, coordinator: IthoCoordinator) -> None:
         """Initialize the button entity."""
@@ -58,7 +57,6 @@ class FlagsFaultActiveBinarySensor(IthoEntity, BinarySensorEntity):
 class FlagsFilterDirtyBinarySensor(IthoEntity, BinarySensorEntity):
     """Defines a Itho flags filter dirty binary sensor."""
 
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_device_class = BinarySensorDeviceClass.PROBLEM
     _attr_name = "Filter Dirty"
 

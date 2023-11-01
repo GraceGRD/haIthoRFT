@@ -66,7 +66,8 @@ class IthoStateSensorEntity(IthoEntity, SensorEntity):
             if active_speed_mode is not None:
                 return active_speed_mode
 
-        return None # TODO: What if None?
+        return None  # TODO: What if None?
+
 
 class IthoCo2SensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho co2 sensor entity."""
@@ -84,7 +85,8 @@ class IthoCo2SensorEntity(IthoEntity, SensorEntity):
     @property
     def native_value(self) -> StateType:
         """Get the native value of the sensor."""
-        return self.coordinator.remote.data.get("co2_level") # TODO: What if None?
+        return self.coordinator.remote.data.get("co2_level")  # TODO: What if None?
+
 
 class IthoBypassValveSensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho bypass valve sensor entity."""
@@ -101,7 +103,10 @@ class IthoBypassValveSensorEntity(IthoEntity, SensorEntity):
     @property
     def native_value(self) -> StateType:
         """Get the native value of the sensor."""
-        return self.coordinator.remote.data.get("bypass_position") # TODO: What if None?
+        return self.coordinator.remote.data.get(
+            "bypass_position"
+        )  # TODO: What if None?
+
 
 class IthoTimeRemainingSensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho time remaining sensor entity."""
@@ -119,7 +124,8 @@ class IthoTimeRemainingSensorEntity(IthoEntity, SensorEntity):
     @property
     def native_value(self) -> StateType | Decimal:
         """Get the native value of the sensor."""
-        return self.coordinator.remote.data.get("remaining_time") # TODO: What if None?
+        return self.coordinator.remote.data.get("remaining_time")  # TODO: What if None?
+
 
 class IthoTemperatureSensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho temperature sensor entity."""
@@ -128,7 +134,7 @@ class IthoTemperatureSensorEntity(IthoEntity, SensorEntity):
         """Initialize the temperature sensor entity."""
         super().__init__(coordinator=coordinator)
         self._attr_unique_id = sensor_id
-        self._attr_name = sensor_id.split("_")[0].capitalize()
+        self._attr_name = " ".join(map(str, sensor_id.capitalize().split("_")))
         self._attr_icon = "mdi:thermometer"
         self._attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
         self._attr_device_class = SensorDeviceClass.TEMPERATURE
@@ -137,7 +143,10 @@ class IthoTemperatureSensorEntity(IthoEntity, SensorEntity):
     @property
     def native_value(self) -> StateType | Decimal:
         """Get the native value of the sensor."""
-        return self.coordinator.remote.data.get(self._attr_unique_id) # TODO: What if None?
+        return self.coordinator.remote.data.get(
+            self._attr_unique_id
+        )  # TODO: What if None?
+
 
 class IthoFlowSensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho flow sensor entity."""
@@ -146,7 +155,7 @@ class IthoFlowSensorEntity(IthoEntity, SensorEntity):
         """Initialize the flow sensor entity."""
         super().__init__(coordinator=coordinator)
         self._attr_unique_id = sensor_id
-        self._attr_name = sensor_id.split("_")[0].capitalize()
+        self._attr_name = " ".join(map(str, sensor_id.capitalize().split("_")))
         self._attr_icon = "mdi:air-filter"
         self._attr_native_unit_of_measurement = "m3/h"
         self._attr_device_class = "Flow"
@@ -155,4 +164,6 @@ class IthoFlowSensorEntity(IthoEntity, SensorEntity):
     @property
     def native_value(self) -> StateType | Decimal:
         """Get the native value of the sensor."""
-        return self.coordinator.remote.data.get(self._attr_unique_id) # TODO: What if None?
+        return self.coordinator.remote.data.get(
+            self._attr_unique_id
+        )  # TODO: What if None?
