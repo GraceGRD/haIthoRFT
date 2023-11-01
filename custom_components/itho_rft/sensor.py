@@ -10,6 +10,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
+    EntityCategory,
     UnitOfTemperature,
     UnitOfTime,
     CONCENTRATION_PARTS_PER_MILLION,
@@ -31,6 +32,8 @@ async def async_setup_entry(
     coordinator: IthoCoordinator = hass.data[DOMAIN][entry.entry_id]
 
     sensors = [
+        IthoRemoteAddressSensorEntity(coordinator),
+        IthoUnitAddressSensorEntity(coordinator),
         IthoStateSensorEntity(coordinator),
         IthoCo2SensorEntity(coordinator),
         IthoBypassValveSensorEntity(coordinator),
@@ -45,6 +48,41 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
     return True
+
+
+class IthoRemoteAddressSensorEntity(IthoEntity, SensorEntity):
+    """Defines a Itho remote address sensor entity."""
+
+    def __init__(self, coordinator: IthoCoordinator) -> None:
+        """Initialize the remote address sensor entity."""
+        super().__init__(coordinator=coordinator)
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
+        self._attr_unique_id = "remote_address"
+        self._attr_name = "Remote Address"
+        self._attr_icon = "mdi:remote"
+
+    @property
+    def native_value(self) -> StateType | str:
+        """Get the native value of the sensor."""
+        return self.coordinator.remote.remote_address
+
+
+class IthoUnitAddressSensorEntity(IthoEntity, SensorEntity):
+    """Defines a Itho unit address sensor entity."""
+
+    def __init__(self, coordinator: IthoCoordinator) -> None:
+        """Initialize the unit address sensor entity."""
+        super().__init__(coordinator=coordinator)
+        self._attr_entity_category = EntityCategory.DIAGNOSTIC
+        self._attr_unique_id = "unit_address"
+        self._attr_name = "Unit Address"
+        self._attr_icon = "mdi:hvac"
+
+    @property
+    def native_value(self) -> StateType | str:
+        """Get the native value of the sensor."""
+        return self.coordinator.remote.unit_address
+
 
 class IthoStateSensorEntity(IthoEntity, SensorEntity):
     """Defines a Itho state sensor entity."""
