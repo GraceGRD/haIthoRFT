@@ -3,7 +3,8 @@
     "image": "mcr.microsoft.com/devcontainers/python:1-3.13",
     // https: //stackoverflow.com/questions/68527888/how-can-i-use-a-usb-com-port-inside-of-a-vscode-development-container
     "runArgs": [
-        "--device=dev/ttyACM0:/dev/ttyACM0"
+        "--device=/dev/ttyACM0:/dev/ttyACM0",
+        "--group-add=20"
     ],
     "privileged": true,
     "postCreateCommand": "scripts/setup",
